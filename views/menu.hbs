@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+</head>
+<style>
+    body {
+        background: url('/images/pexels-photo-160032.jpeg');
+        padding: 50px;
+         background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center; 
+
+   
+    }
+    p {
+	color:#CCC;
+}
+
+.spacing {
+	padding-top:7px;
+	padding-bottom:7px;
+}
+.middlePage {
+    border-radius: 25px;
+	width: 680px;
+    height: 500px;
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    border: 2px solid #73AD21;
+    background: white;
+}
+
+.logo {
+	color:#CCC;
+}
+.content{
+    color: red;
+    padding: 10px;
+    width : auto;
+    height : auto;
+}
+</style>
+
+<body>
+<div class="middlePage">
+    <marquee direction="up" scrollamount="1" height="490"><p class="content" id="msg"></p></marquee>
+
+</div>
+
+   
+
+</body>
+ <script>
+        getoffice();
+        function getoffice() {
+        
+            $.ajax({
+                type: "GET",
+                url: "http://big-sh-korat.com/api/msg",
+                dataType: "json",
+                success: function (lg) {
+                    //console.log(lg.msg);
+					$("#msg").html(lg.msg1);
+                    /*jQuery.each(lg, function (index, row) {
+                            $("#msg").html(row.msg);
+
+                    });
+					*/
+                    
+                }
+            });
+        }
+
+
+    </script>
+
+</html>

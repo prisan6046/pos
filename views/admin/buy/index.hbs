@@ -1,0 +1,52 @@
+<section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">ราบการบิลทั้งหมด</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>เลขที่บิล</th>
+                  <th>วัน เดือน ปี </th>
+                  <th>เงินรวมสินค้า</th>
+                  <th>เงินทอน</th>
+                  <th>รับเงิน</th>
+                </tr>
+                </thead>
+                <tbody>
+                
+                {{#each data}}
+                <tr>
+                  <td>000-00{{ this.id_bill}}</td>
+                  <td>{{ this.datetime}}
+                  </td>
+                  <td>{{ this.pay }}</td>
+                  <td> {{ this.withdraw }}</td>
+                  <td>{{ this.price }}</td>
+                </tr>
+
+
+
+                {{/each}}
+                </tbody>
+                <tfoot>
+                <tr>
+                  <th>เลขที่บิล</th>
+                  <th>วัน เดือน ปี </th>
+                  <th>เงินรวมสินค้า</th>
+                  <th>เงินทอน</th>
+                  <th>รับเงิน</th>
+                </tr>
+                </tfoot>
+              </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+        </div>
+      </div>
+</section>

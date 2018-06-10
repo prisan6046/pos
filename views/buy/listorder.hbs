@@ -1,0 +1,101 @@
+<div >
+    <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+        <div class="page-header pull-left">
+            <div class="page-title">
+                รายการที่ขายวันนี้</div>
+        </div>
+        
+        <div class="clearfix">
+        </div>
+    </div>
+    <div class="page-content">
+        <div id="tab-general">
+            <div class="row mbl">
+                <div class="col-lg-7">
+                    <h3>รายงานการขายวันนี้</h3>
+                     
+                    <div class="panel">
+                        <div class="panel-body">
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>เลขที่บิล</th>
+                                        <th>ราคาขาย</th>
+                                        <th>เงินจ่ายจากลูกค้า</th>
+                                        <th>ถอนเงิน</th>
+                                        <th>วันที่</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each bills}}
+                                    <tr>
+                                        <td> 000-00{{ this.id_bill}}</td>
+                                        <td>{{ this.pay }}</td>
+                                        <td>{{ this.price }}</td>
+                                        <td>{{ this.withdraw }}</td>
+                                        <td>{{ this.datetime }}</td>
+                                        <td><button  type="button"  class="btn btn-primary" onclick="getIdOrder({{ this.id_bill }})">ดูรายละเอียด</button></td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                      <h3>รายงานการขายวันนี้</h3>
+                    <div class="portlet box">
+                        <div class="portlet-header">
+                            
+                        </div>
+                        <div class="portlet-body">
+                           <div><h4 id="numberbill">เลขที่บิล : </h4></div>
+                           <div><h4 id="date">วันที่ : </h4></div>
+                           <div><h4 id="totalsum" >จำนวนเงินรวมสินค้า : </h4></div>
+                           <div><h4 id="totaluser">จำนวนเงินที่ลูกค้าจ่าย : </h4></div>
+                           <div><h4 id="withdraw" >เงินทอนลูกค้า : </h4></div>
+                            <div><h5>
+                                <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>ชื่อสินค้า</th>
+                                        <th>รหัสสินค้า</th>
+                                         <th>ราคา</th>
+                                        <th>จำนวน</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="listorder">
+                                    
+                                </tbody>
+                            </table>
+                            </h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+function getIdOrder(id){
+    $("#listorder").empty();
+    $.ajax({
+        type: "GET",
+        url: "/buy/getorderId/"+id,
+        dataType: "json",
+        success: function (lg) {
+            jQuery.each(lg, function(index,row){
+               $("#numberbill").html("เลขที่บิล : 000-00"+row.idbill);
+               $("#date").html("วันที่ : "+row.datetime);
+               $("#totalsum").html("จำนวนเงินรวมสินค้า : "+row.pay+" บาท");
+               $("#withdraw").html("เงินทอนลูกค้า : "+row.withdraw+" บาท");
+               $("#totaluser").html("จำนวนเงินที่ลูกค้าจ่าย : "+row.price+" บาท");
+              jQuery.each(row.item, function(index1,rowitem){
+                $("#listorder").append("<tr><td>"+rowitem.name_product+"</td><td>"+rowitem.product_barcode+"</td><td>"+rowitem.price+"</td><td>"+rowitem.qty+"</td></tr>")
+                });
+            });
+        }
+    });	
+}
+</script>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>tset</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h2>ข้อมูล IP จาก sun5</h2>
+ <input id="name" type="text" onkeyup="myFunction()">
+ <button onclick="getIdOrder()">ค้นหา</button>           
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ลำดับ</th>
+        <th>รหัสร้านค้า</th>
+        <th>ชื่อร้านค้า</th>
+        <th>IP</th>
+      </tr>
+    </thead>
+    <tbody id="list">
+    </tbody>
+  </table>
+</div>
+
+</body>
+
+<script>
+function myFunction(){
+  var name = $("#name").val();
+  if(name.length == 3){
+    $("#name").val(name+"-");
+  }
+  if(name.length == 7){
+    $("#name").val(name+"-");
+  }
+}
+
+
+</script>
+</html>

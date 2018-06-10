@@ -1,0 +1,467 @@
+<div >
+    <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+        <div class="page-header pull-left">
+            <div class="page-title">
+                รายการสินค้า</div>
+        </div>
+        
+        <div class="clearfix">
+        </div>
+    </div>
+    <div class="page-content">
+        <div id="tab-general">
+
+            <div class="row mbl">
+                
+                <div class="col-lg-9">
+                    <h3>รายงานการขายวันนี้ {{ datetime }} || {{ ip }}</h3>
+                      <div id="sum_box" class="row mbl">
+                            <div class="col-sm-6 col-md-3">
+                                <div class="panel profit db mbm">
+                                    <div class="panel-body">
+                                        <p class="icon">
+                                            <i class="icon fa fa-shopping-cart"></i>
+                                        </p>
+                                        <h4 class="value">
+                                            <span data-counter="" data-start="10" data-end="50" data-step="1" data-duration="0">
+                                            </span>{{ ordertoday }}<span> ชิ้น</span></h4>
+                                        <p class="description">
+                                            จำนวนสินค้าที่ขาย</p>
+                                        <div class="progress progress-sm mbn">
+                                            <div role="progressbar" aria-valuenow="{{ ordertoday }}" aria-valuemin="0" aria-valuemax="100"
+                                                style="width: 80%;" class="progress-bar progress-bar-success">
+                                                <span class="sr-only">{{ ordertoday }}% Complete (success)</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-3">
+                                <div class="panel income db mbm">
+                                    <div class="panel-body">
+                                        <p class="icon">
+                                            <i class="icon fa fa-money"></i>
+                                        </p>
+                                        <h4 class="value">
+                                            <span>{{ Sumtoday }}</span><span> $</span></h4>
+                                        <p class="description">
+                                            ขายได้ทั้งหมด</p>
+                                        <div class="progress progress-sm mbn">
+                                            <div role="progressbar" aria-valuenow="{{ Sumtoday }}" aria-valuemin="0" aria-valuemax="100"
+                                                style="width: 60%;" class="progress-bar progress-bar-info">
+                                                <span class="sr-only">{{ Sumtoday }}% Complete (success)</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-3">
+                                <div class="panel task db mbm">
+                                    <div class="panel-body">
+                                        <p class="icon">
+                                            <i class="icon fa fa-signal"></i>
+                                        </p>
+                                        <h4 class="value">
+                                            <span>{{ orderbills }}</span></h4>
+                                        <p class="description">
+                                            จำนวนบิล</p>
+                                        <div class="progress progress-sm mbn">
+                                            <div role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"
+                                                style="width: 50%;" class="progress-bar progress-bar-danger">
+                                                <span class="sr-only">50% Complete (success)</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-3">
+                                <div class="panel visit db mbm">
+                                    <div class="panel-body">
+                                        <p class="icon">
+                                            <i class="icon fa fa-group"></i>
+                                        </p>
+                                        <h4 class="value">
+                                            <span>0</span></h4>
+                                        <p class="description">
+                                            ระบบเครือข่าย</p>
+                                        <div class="progress progress-sm mbn">
+                                            <div role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"
+                                                style="width: 70%;" class="progress-bar progress-bar-warning">
+                                                <span class="sr-only">70% Complete (success)</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       <h3><b>เลขที่ใบเสร็จ 000-00{{ bills }}<b/><button style="float: right;" class="btn btn-info btn-flat" data-toggle="modal" data-target="#myModal">ค้นหาสินค้าตามชื่อ</button></h3>
+                    <div class="panel">
+                        <div class="panel-body">
+                            <table class="table table-hover table-bordered">
+                                
+                                
+                                <thead>
+                                    <tr>
+                                        <th>รหัสสินค้า</th>
+                                        <th>รายการ</th>
+                                        <th>ชิ้น</th>
+                                        <th>ราคา</th>
+        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each products}}
+                                    <tr>
+                                        <td>{{ this.item.barcode}}
+
+                                        </td>
+                                        <td>{{ this.item.name}}</td>
+                                        <td><button data-toggle="modal" data-target="#myModal1" onclick="NumberAddorder({{ this.item.barcode }})">เพิ่ม</button><input type="text" value="{{ this.qty }}" /> <button>ลบ</button> </td>
+                                        <td>{{ this.item.price }}</td>
+                                        
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                            <form action="/buy/add-cart" name="myForm" method="POST">
+                                <input type="hidden" value="{{ bills }}" name="order"/>
+                                        <input name="id" type="text" placeholder="รหัสสินค้า" class="form-control" required/>
+                                </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <div class="portlet box">
+                        <div class="portlet-header">
+                            <div class="caption">
+                                ราคาทั้งหมด
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <center>
+                                <B style="font-size:80px">{{totalPrice}}</B>
+                                <br>
+                                <B style="font-size:30px" >บาท</B>
+                            </center>
+                        </div>
+                    </div>
+                     <div class="portlet box">
+                        <div class="portlet-header">
+                            <div class="caption">
+                                ชำระเงิน
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                             <input id="sum"  type="text" placeholder="จำนวนเงินลูกค้า" onkeydown = "if (event.keyCode == 13) SumOrder()"    class="form-control" required/>
+                            <center>
+                                <B style="font-size:80px" id="totalSum">0</B><br>
+                                <B style="font-size:30px" >บาท</B>
+                            </center>
+                            <button  type="button" id="print" onclick="todo()" class="btn btn-green btn-block"><h2>ปริ้นใบเสร็จ</h2></button>
+                             <button type="button" OnClick="chkConfirm()" class="btn btn-danger btn-sm btn-block"><h2>ยกเลิกรายการ</h2></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade"  id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">ค้นหาสินค้าในรายการ</h4>
+        </div>
+        <div class="modal-body">
+          <div class="panel-body">
+              
+              <input id="search" onkeydown="getsearch();" type="text" placeholder="ค้นหาชื่อสินค้า" class="form-control" required/>
+              <br>
+                            <table class="table table-hover table-bordered">
+                                
+                                <thead>
+                                    <tr>
+                                        <th>รหัสสินค้า</th>
+                                        <th>รายการ</th>
+                                        <th>ราคา</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="searching">
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+</div>
+<div class="modal fade"  id="myModal1" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">เพิ่มจำนวนสินค้า</h4>
+        </div>
+        <div class="modal-body">
+          <div class="panel-body">
+              <form action="/buy/add-cart/addnumberorder"  method="POST"> 
+               <input id="Idrorder" name="id" type="hidden" placeholder="จำนวนสินค้า"   class="form-control" required/>
+               <input id="numberorder" name="numberorder" type="text" placeholder="จำนวนสินค้า"   class="form-control" required/>
+              </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+</div>
+</div>
+
+
+ <style type="text/css" media="print">
+@media all {
+  .page-break { display: none; }
+}
+
+@media print {
+  .page-break { display: block; page-break-before: always; }
+}
+    body 
+    {
+	size:auto;
+    margin:0 0 0 0px;  /* เป็นการกำหนดขอบกระดาษของเนื้อหาที่จะพิมพ์ก่อนที่จะส่งไปให้เครื่องพิมพ์ครับ */
+	font-size:30px;
+    }
+</style>
+
+<div id="myModal" class="modal fade" role="dialog">
+<div id="page-start">
+<br>
+{{#each data}}
+<center><font size="2">{{ this.name_office }}</font></center> 
+<center><font size="1">{{ this.address }}</font></center>
+<center><font size="1">{{ this.receipt_number }}</font></center>
+{{/each}}
+<center><font size="1">No : #000-00{{ bills }}</font></center>
+{{#each data}}
+<center><font size="2">--------------------------</font></center>
+<center><font size="1">{{ this.title_header }}</font></center>
+<center><font size="2">--------------------------</font></center>
+{{/each}}
+<center>
+<table style="width:100%">
+    <tbody>
+        {{#each products}}
+        <tr>
+			<td><font size="1">{{ this.qty}}</font></td>
+            <td><font size="1">{{ this.item.name}}</font></td>
+            <td><font size="1" align="right" >{{  this.item.price }}</font></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+</center>
+<center><font size="2">--------------------------</font></center>
+<table style="width:100%">
+    <tbody>  
+		<tr>
+            <td><font size="1">จำนวนสินค้า</font></td>
+            <td><font size="1" align="right" >{{totalQty}}</font></td>
+        </tr>
+        <tr>
+            <td><font size="1">รวมราคา</font></td>
+            <td><font size="1" align="right" >{{totalPrice}}</font></td>
+        </tr>
+		 <tr>
+            <td><font size="1">เงินสด</font></td>
+            <td><font size="1" ><p id="money"><p></font></td>
+        </tr>
+		 <tr>
+            <td><font size="1">เงินทอน</font></td>
+            <td><font size="1" ><p id="sumPrint"><p></font></td>
+        </tr>
+    </tbody>
+</table>
+    <center><font size="2">--------------------------</font></center>
+	<table style="width:100%">
+    <tbody>  
+		<tr>
+            <td><center><font size="1" >ผู้ขาย</font></center></td>
+            <td><center><font size="1"  >ผู้รับ</font></center></td>
+        </tr>
+    </tbody>
+</table>
+	<center><font size="1">|</font></center>
+	<center><font size="1">|</font></center>
+	<center><font size="1">|</font></center>
+	<center><font size="1">|</font></center>
+	<center><font size="2">--------------------------</font></center>
+		<table style="width:100%">
+    <tbody>  
+		<tr>
+            <td><center><font size="1" >ผู้รับแทน .........................................</font></center></td>
+        </tr>
+		
+    </tbody>
+</table>
+
+
+	<center><font size="1">วันที {{ datetime }}</font></center>
+    <div class="page-break"></div>
+  </div>
+</div>
+
+<script>
+    function getsearch() {
+        var Search = $("#search").val();
+        $("#searching").empty();
+        $.ajax({
+            type: "get",
+            url: "/buy/getordername/" + Search,
+            dataType: "json",
+            success: function (lg) {
+                jQuery.each(lg, function (index, row) {
+                    $("#searching").append("<tr><td>" + row.product_barcode + "</td><td>" + row.name_product + "</td><td>" + row.price + "</td><td><button type=\"button\" class=\"btn btn-default\" onclick=\"setcart("+row.product_barcode+")\">เพิ่มสินค้า</button></td></tr>");
+                });
+            },
+            error: function (jqXHR, status, error) {
+                $("#searching").empty();
+            }
+        });
+    }
+    function setcart(barcode){
+       // alert(barcode);
+        $.ajax({
+            type : "post",
+            url : "/buy/add-cart",
+            data : {
+                id : barcode
+            },
+            dataType : "text",
+            success : function(lg){
+                location.reload();
+            }, error: function (jqXHR, status, error) {
+               // $("#searching").empty();
+               alert("No");
+            }
+        });
+    }
+</script>
+
+
+
+
+
+<script>
+
+
+validateForm();
+function validateForm() {
+    if( document.myForm.id.value == "" )
+         {
+            //alert( "Please provide your name!" );
+            document.myForm.id.focus() ;
+            return false;
+         }
+}
+function SumOrder(){
+    var sum = $("#sum").val();
+	$("#money").html(sum);
+    var total = parseInt({{ totalPrice }});
+    //alert('YES'+sum);
+    sum = sum - total;
+    $("#totalSum").html(sum);
+	$("#sumPrint").html(sum);
+    $("#print").disabled = false;
+
+}
+function chkConfirm()
+	{
+		if(confirm('คุณต้องการยกเลิกรายการปัจจุบันหรือไม่ ?')==true)
+		{
+			alert('ยกเลิกรายการสำเร็จ');
+			window.location = '/buy/clr';
+		}
+		
+	}
+
+async function todo() {
+   var sum =  $("#sum").val();
+   if(sum == ''){
+       alert("คุณยังไม่ได้กรอกเงินลูกค้า");
+      return false;
+   }
+  const a = await getA()
+  const b = await getB()
+  //const a = await getA()
+  //const b = await getB()
+}
+
+function NumberAddorder(id){
+    $("#Idrorder").val(id);
+}
+
+function getA(){
+    //alert("A");
+    var divToPrint = document.getElementById('page-start'); // เลือก div id ที่เราต้องการพิมพ์
+	var html =  '<html>'+ // 
+				'<head>'+
+					'<link href="css/print.css" rel="stylesheet" type="text/css">'+
+				'</head>'+
+					'<body onload="window.print(); window.close();">' + divToPrint.innerHTML + '</body>'+
+				'</html>';
+				
+	var popupWin = window.open();
+	popupWin.document.open();
+	popupWin.document.write(html); //โหลด print.css ให้ทำงานก่อนสั่งพิมพ์
+    popupWin.document.close();	
+    window.location="/buy/clr";
+    
+}
+
+function getB(){
+     var sum = $("#sum").val();
+     var total = parseInt({{ totalPrice }});
+      var  withdraw = sum - total;
+    $.ajax({
+                type: "POST",
+                url: "/buy/createbill",
+                data : {
+                    id_bill : {{ bills }},
+                    price : sum,
+                    withdraw : withdraw
+                },
+                dataType: "json",
+                success: function (lg) {
+                    
+                }
+            });	
+}
+
+
+
+function PrintDiv() {
+        var divToPrint = document.getElementById('page-start'); // เลือก div id ที่เราต้องการพิมพ์
+	var html =  '<html>'+ // 
+				'<head>'+
+					'<link href="css/print.css" rel="stylesheet" type="text/css">'+
+				'</head>'+
+					'<body onload="window.print(); window.close();">' + divToPrint.innerHTML + '</body>'+
+				'</html>';
+				
+	var popupWin = window.open();
+	popupWin.document.open();
+	popupWin.document.write(html); //โหลด print.css ให้ทำงานก่อนสั่งพิมพ์
+
+            popupWin.document.close();	
+             
+
+     
+}
+
+
+
+</script>
+

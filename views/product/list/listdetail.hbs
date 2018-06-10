@@ -1,0 +1,241 @@
+<section class="content">
+    <div class="box box-default">
+        <div class="box-header with-border">
+            <h3>รายละเอียดสินค้า</h3>
+              
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove">
+                    <i class="fa fa-remove"></i>
+                </button>
+            </div>
+        </div>
+        <div class="box-body">
+
+     <div class="row">
+       <form action="/product/insentdetailproduct" method="post">
+        <div class="col-md-6">
+          <div class="box box-danger">
+            <div class="box-header">
+              <h3 class="box-title">รายละเอียดสินค้า</h3>
+            </div>
+            <div class="box-body">
+              <div class="form-group">
+                <label>ประเภทสินค้า</label>
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="glyphicon glyphicon-chevron-right"></i>
+                  </div>
+                  <select class="form-control" name="group_product">
+                    {{# each data }}
+                    <option value="{{ this.group_id}}">{{ this.group_name }}</option>
+                    {{/each}}
+                  </select>
+                </div>
+              </div>
+             
+              <div class="form-group">
+                <label>ชื่อสินค้า</label>
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="glyphicon glyphicon-chevron-right"></i>
+                  </div>
+                  <input type="text" name="name_product" class="form-control" >
+                </div>
+              </div>
+              <div class="form-group">
+                <label>รหัสสินค้า ( barcode )</label>
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="glyphicon glyphicon-chevron-right"></i>
+                  </div>
+                  <input type="text" name="barcode" id="barcode" class="form-control">
+				  <button type="button" onclick="createBarcode()" class="btn btn-warning" >สร้างบาร์โค้ดอัตโนมัติ</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="box box-info">
+            <div class="box-header">
+              <h3 class="box-title">รายละเอียดราคา</h3>
+            </div>
+            <div class="box-body">
+              <div class="form-group">
+                <label>ราคาที่ขายจริง</label>
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="glyphicon glyphicon-chevron-right"></i>
+                  </div>
+                  <input type="text" name="price" class="form-control" >
+                </div>
+              </div>
+               <div class="form-group">
+                <label>ราคาที่นำเข้า</label>
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="glyphicon glyphicon-chevron-right"></i>
+                  </div>
+                  <input type="text" name="price_vat" class="form-control" >
+                </div>
+              </div>
+             
+            </div>
+          </div>
+
+        </div>
+        <div class="col-md-6">
+          <div class="box box-primary">
+            <div class="box-header">
+              <h3 class="box-title">รายละเอียดการผลิต - บริษัทจำหน่าย</h3>
+            </div>
+            <div class="box-body">
+               <div class="form-group">
+                <label>ชื่อบริษัทที่นำเข้า</label>
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="glyphicon glyphicon-chevron-right"></i>
+                  </div>
+                  <select class="form-control" id="idoffice" name="office" onchange="getoffice()">
+                    <option >กรุณาเลือกบริษัทเจ้าของสินค้า</option>
+                    {{# each office }}
+                    <option  value="{{ this.id_office}}">บริษัท {{ this.offname_thai }}</option>
+                    {{/each}}
+                  </select>
+                  
+                </div>
+              </div>
+              <div class="form-group">
+                <label>ที่อยู่บริษัท</label>
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="glyphicon glyphicon-chevron-right"></i>
+                  </div>
+                   <div id="detall"></div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>เบอร์โทรศัพท์</label>
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="glyphicon glyphicon-chevron-right"></i>
+                  </div>
+                  <input type="text" id="tel" class="form-control" >
+                </div>
+              </div>
+              <div class="form-group">
+                <label>เบอร์โทรศัพท์มือถือ</label>
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="glyphicon glyphicon-chevron-right"></i>
+                  </div>
+                  <input type="text" id="tel1" class="form-control">
+                </div>
+              </div>
+              <div class="form-group">
+                <label>ผู้ดูแลหรือติดต่อ</label>
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="glyphicon glyphicon-chevron-right"></i>
+                  </div>
+                  <input type="text" id="user" class="form-control" >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+         <div class="col-md-6">
+          <div class="box box-primary">
+            <div class="box-header">
+              <h3 class="box-title">จำนวนสินค้าที่นำเข้า</h3>
+            </div>
+            <div class="box-body">
+              <div class="form-group">
+                <label>จำนวนสินค้าทั้งหมด</label>
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="glyphicon glyphicon-chevron-right"></i>
+                  </div>
+                    <input type="text" name="stock_product" class="form-control" >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <center><button type="submit" class="btn btn-warning"> บันทึกข้อมูล</button></center>
+        </div>
+        </form>
+    </div>
+
+
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">ตารางรายการสินค้า</h3>
+        </div>
+        <div class="box-body">
+            <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                       <th>รหัสสินค้า</th>
+                        <th>ชื่อสินค้า</th>
+                        <th>ประเภทสินค้า</th>
+                        <th>บริษัทที่นำเข้า</th>
+                         <th>จำนวนสินค้า</th>
+						  <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                   {{# each getproduct }}
+                    <tr>
+                        <td>{{this.product_barcode}}</td>
+                        <td>{{this.name_product}}</td>
+                        <td>{{ this.group_name }}</td>
+                        <td>{{ this.offname_thai}}</td>
+                        <td>{{ this.stock_product}}</td>
+						<td><a href="/product/deleteProductId/{{ this.id_product }}" onclick="return confirm('คุณต้องการลบข้อมูลนี้หรือไม่');"><button type="button" class="btn btn-danger"> ลบข้อมูล</button></a></td>
+                    </tr>
+                    {{/each}}
+                    </tfoot>
+            </table>
+        </div>
+    </div>
+</section>
+
+<script src="/bower_components/ckeditor/ckeditor.js"></script>
+<script src="/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+<script>
+$(document).keypress(function(e){
+		if(e.which == 13 || event.keyCode == 13){
+			return false;
+			//alret("ok");
+		}
+	});
+  $(function () {
+    CKEDITOR.replace('editor1')
+    $('.textarea').wysihtml5()
+  })
+  </script>
+  <script>
+	function createBarcode(){
+		var create = Math.random();
+		$("#barcode").val(create);
+	}
+   function getoffice(){
+     var id = $("#idoffice").val();
+     $.ajax({
+    type: "GET",
+    url: "/api/selectOfficeId/"+id,
+    dataType: "json",
+    success: function(lg){
+      jQuery.each(lg, function(index,row){
+        $("#detall").html(row.off_detail);
+        $("#tel").val(row.off_tel);
+        $("#tel1").val(row.off_tel1);
+        $("#user").val(row.user_contect);
+      });
+    }
+  });
+    }
+  </script>

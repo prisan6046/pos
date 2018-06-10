@@ -1,0 +1,59 @@
+<section class="content">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">ตารางรายการสินค้า</h3>
+        </div>
+        <div class="box-body">
+            <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                       <th>รหัสสินค้า</th>
+                        <th>ชื่อสินค้า</th>
+                        <th>ประเภทสินค้า</th>
+                        <th>จำนวนสต๊อกสินค้า</th>
+                        <th>บริษัทที่นำเข้า</th>
+                    </tr>
+                </thead>
+                <tbody>
+                   {{# each getproduct }}
+                    <tr>
+                        <td>{{this.product_barcode}}</td>
+                        <td>{{this.name_product}}</td>
+                        <td>{{ this.group_name }}</td>
+                         <td>{{ this.stock_product }}</td>
+                        <td>{{ this.offname_thai}}</td>
+                    </tr>
+                    {{/each}}
+                    </tfoot>
+            </table>
+        </div>
+    </div>
+</section>
+
+<script src="/bower_components/ckeditor/ckeditor.js"></script>
+<script src="/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+<script>
+  $(function () {
+    CKEDITOR.replace('editor1')
+    $('.textarea').wysihtml5()
+  })
+  </script>
+  <script>
+   function getoffice(){
+     var id = $("#idoffice").val();
+     //alert(id);
+     $.ajax({
+    type: "GET",
+    url: "/api/selectOfficeId/"+id,
+    dataType: "json",
+    success: function(lg){
+      jQuery.each(lg, function(index,row){
+        $("#detall").html(row.off_detail);
+        $("#tel").val(row.off_tel);
+        $("#tel1").val(row.off_tel1);
+        //$("#name").val(row.off_fex);
+      });
+    }
+  });
+    }
+  </script>

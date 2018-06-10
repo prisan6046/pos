@@ -1,0 +1,80 @@
+{{!< layout }}
+<section class="content">
+  <div class="box box-default">
+    <div class="box-header with-border">
+      <h3>-</h3>
+      <div class="box-tools pull-right">
+        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+          <i class="fa fa-minus"></i>
+        </button>
+        <button type="button" class="btn btn-box-tool" data-widget="remove">
+          <i class="fa fa-remove"></i>
+        </button>
+      </div>
+    </div>
+    <div class="box-body">
+      <div class="row">
+        <form action="addgroup" method="post">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>ชื่อประเภทสินค้า</label>
+            <input type="text" name="name" id="name" class="form-control">
+            <input type="hidden" name="id" id="id" class="form-control">
+          </div>
+          <button type="submit" class="btn btn-warning">บันทึก</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="box">
+    <div class="box-header">
+      <h3 class="box-title">รายการประเภทสินค้า</h3>
+    </div>
+    <div class="box-body">
+      <table id="example2" class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>ชื่อประเถท</th>
+          </tr>
+        </thead>
+        <tbody id="list">
+            
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+<script>
+listgroup();
+function listgroup(){
+  $.ajax({
+    type: "GET",
+    url: "/api/selectGroupProduct",
+    dataType: "json",
+    success: function(lg){
+	console.log(lg);
+      jQuery.each(lg, function(index,row){
+	 // alert(row.group_id+" : "+row.group_name);
+        $("#list").append("<tr><td>"+row.group_name+"</td><td><center><a onclick=\"getId("+row.group_id+")\" ><button type=\"button\" class=\"btn btn-warning\">แก้ไข</button></a> <a href=\"/product/deletegroup/"+row.group_id+"\" onclick=\"return confirm(\'คุณต้องการลบข้อมูลนี้หรือไม่\');\"><button type=\"button\" class=\"btn btn-danger\"> ลบข้อมูล</button></a></center></td> </tr>");
+      });
+    }
+  });
+}
+
+function getId(id){
+  $.ajax({
+    type: "GET",
+    url: "/api/selectGetIdfromgroup/"+id,
+    dataType: "json",
+    success: function(lg){
+      jQuery.each(lg, function(index,row){
+        $("#id").val(row.group_id);
+        $("#name").val(row.group_name);
+      });
+    }
+  });
+}
+</script>
